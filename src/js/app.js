@@ -1,0 +1,1 @@
+// const api = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=945a05b7b60aff343b86c6ec33f4afd3`;

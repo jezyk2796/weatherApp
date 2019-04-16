@@ -25,6 +25,13 @@
     .current-icon {
       height: 10rem;
       width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 8rem;
+      }
     }
 
     .current-description {
@@ -52,6 +59,15 @@
     .info-box {
       width: 100%;
       font-size: 1.8rem;
+
+      i {
+        font-size: 3rem;
+      }
+
+      p {
+        padding: 0 0 0 1.5rem;
+        font-size: 2rem;
+      }
     }
   }
 }

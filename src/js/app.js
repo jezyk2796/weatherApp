@@ -11,10 +11,32 @@ window.addEventListener("load", () => {
 
       const api = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=945a05b7b60aff343b86c6ec33f4afd3`;
 
-      const showDate = () => {
-        // set date
+      const showTime = () => {
         const fullDate = new Date();
 
+        let hours = fullDate.getHours();
+        if (hours < 10) {
+          hours = `0${hours}`;
+        }
+        let minutes = fullDate.getMinutes();
+        if (minutes < 10) {
+          minutes = `0${minutes}`;
+        }
+        let seconds = fullDate.getSeconds();
+        if (seconds < 10) {
+          seconds = `0${seconds}`;
+        }
+
+        timeElement.innerHTML = `${hours}:${minutes}:${seconds}`;
+
+        setTimeout(showTime, 1000);
+      }
+      showTime();
+
+      const showDate = () => {
+        const fullDate = new Date();
+
+        // set date
         let day = fullDate.getDate();
         if (day < 10) {
           day = `0${day}`;
@@ -60,7 +82,7 @@ window.addEventListener("load", () => {
         // show date
         dateElement.innerHTML = currentDate;
         // show day
-        dayElement.innerHTML = dayName;
+        dayElement.textContent = dayName;
       };
       showDate();
 

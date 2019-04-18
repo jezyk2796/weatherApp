@@ -125,17 +125,12 @@ window.addEventListener("load", () => {
           return resp.json();
         })
         .then(data => {
-          // ------------
-          console.log(data)
 
           showData(city, data.city.name);
 
           return data.list;
         })
         .then(list => {
-          // --------------
-          console.log(list[0]);
-
           const temp = `${Math.floor(list[0].main.temp)}&deg;`;
 
           showData(currentDescription, list[0].weather[0].description);

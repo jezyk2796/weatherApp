@@ -6,6 +6,10 @@ window.addEventListener("load", () => {
   const currentDescription = document.querySelector(".current-description");
   const currentDegree = document.querySelector(".degree");
   const currentIcon = document.querySelector(".current-icon i");
+  const currentClouds = document.querySelector('[data-name="clouds"]');
+  const currentWind = document.querySelector('[data-name="wind"]');
+  const currentHumidity = document.querySelector('[data-name="humidity"]');
+  const currentPressure = document.querySelector('[data-name="pressure"]');
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
@@ -93,7 +97,15 @@ window.addEventListener("load", () => {
 
       // put data from API into HTML elements
       const showData = (element, data) => {
-        element.innerHTML = data;
+        if (element.dataset.name == 'clouds' || element.dataset.name == 'humidity') {
+          element.innerHTML = `${data}%`;
+        } else if (element.dataset.name == 'wind') {
+          element.innerHTML = `${data} m/s`;
+        } else if (element.dataset.name == 'pressure') {
+          element.innerHTML = `${Math.floor(data)} hPa`;
+        } else {
+          element.innerHTML = data;
+        }
       };
 
       const showIcon = (id, icon) => {
@@ -128,6 +140,10 @@ window.addEventListener("load", () => {
 
           showData(currentDescription, list[0].weather[0].description);
           showData(currentDegree, temp);
+          showData(currentClouds, list[0].clouds.all);
+          showData(currentWind, list[0].wind.speed);
+          showData(currentHumidity, list[0].main.humidity);
+          showData(currentPressure, list[0].main.pressure);
           showIcon(list[0].weather[0].id, list[0].weather[0].icon);
         })
         .catch(error => {

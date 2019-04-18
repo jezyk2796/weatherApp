@@ -3,14 +3,18 @@ window.addEventListener("load", () => {
   const dateElement = document.querySelector(".date");
   const timeElement = document.querySelector(".time");
   const dayElement = document.querySelector(".day");
+  const currentDescription = document.querySelector(".current-description");
+  const currentDegree = document.querySelector(".degree");
+  const currentIcon = document.querySelector(".current-icon i");
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       const lon = position.coords.longitude;
       const lat = position.coords.latitude;
 
-      const api = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=945a05b7b60aff343b86c6ec33f4afd3`;
+      const api = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&APPID=945a05b7b60aff343b86c6ec33f4afd3`;
 
+      // CLOCK
       const showTime = () => {
         const fullDate = new Date();
 
@@ -33,6 +37,7 @@ window.addEventListener("load", () => {
       }
       showTime();
 
+      // DATE
       const showDate = () => {
         const fullDate = new Date();
 
@@ -86,8 +91,21 @@ window.addEventListener("load", () => {
       };
       showDate();
 
+      // put data from API into HTML elements
       const showData = (element, data) => {
         element.innerHTML = data;
+      };
+
+      const showIcon = (id, icon) => {
+        if (id >= 800) {
+          if (icon.includes('d')) {
+            currentIcon.className = `wi wi-owm-day-${id}`;
+          } else if (icon.includes('n')) {
+            currentIcon.className = `wi wi-owm-night-${id}`;
+          }
+        } else {
+          currentIcon.className = `wi wi-owm-${id}`;
+        }
       };
 
       fetch(api)
@@ -95,11 +113,27 @@ window.addEventListener("load", () => {
           return resp.json();
         })
         .then(data => {
-          console.log(data);
+          // ------------
+          console.log(data)
 
           showData(city, data.city.name);
-          //   city.innerHTML = data.city.name;
+
+          return data.list;
+        })
+        .then(list => {
+          // --------------
+          console.log(list[0]);
+
+          const temp = `${Math.floor(list[0].main.temp)}&deg;`;
+
+          showData(currentDescription, list[0].weather[0].description);
+          showData(currentDegree, temp);
+          showIcon(list[0].weather[0].id, list[0].weather[0].icon);
+        })
+        .catch(error => {
+          return console.error(`Error: ${error}`);
         });
+
     });
   }
   // else {

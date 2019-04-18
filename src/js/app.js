@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
       const lon = position.coords.longitude;
       const lat = position.coords.latitude;
 
-      const api = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&APPID=945a05b7b60aff343b86c6ec33f4afd3`;
+      const api = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&APPID=945a05b7b60aff343b86c6ec33f4afd3`;
 
       // CLOCK
       const showTime = () => {

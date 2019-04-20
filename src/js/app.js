@@ -140,6 +140,8 @@ window.addEventListener("load", () => {
           showData(currentHumidity, list[0].main.humidity);
           showData(currentPressure, list[0].main.pressure);
           showIcon(list[0].weather[0].id, list[0].weather[0].icon);
+
+          console.log(list);
         })
         .catch(error => {
           return console.error(`Error: ${error}`);

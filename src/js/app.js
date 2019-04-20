@@ -11,6 +11,10 @@ window.addEventListener("load", () => {
   const currentHumidity = document.querySelector('[data-name="humidity"]');
   const currentPressure = document.querySelector('[data-name="pressure"]');
 
+  const hourIcons = document.querySelectorAll('.hour-box i');
+  const hours = document.querySelectorAll('.hour');
+  const hourDegrees = document.querySelectorAll('.hour-degree');
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       const lon = position.coords.longitude;
@@ -108,15 +112,15 @@ window.addEventListener("load", () => {
         }
       };
 
-      const showIcon = (id, icon) => {
+      const showIcon = (element, id, icon) => {
         if (id >= 800) {
           if (icon.includes('d')) {
-            currentIcon.className = `wi wi-owm-day-${id}`;
+            element.className = `wi wi-owm-day-${id}`;
           } else if (icon.includes('n')) {
-            currentIcon.className = `wi wi-owm-night-${id}`;
+            element.className = `wi wi-owm-night-${id}`;
           }
         } else {
-          currentIcon.className = `wi wi-owm-${id}`;
+          element.className = `wi wi-owm-${id}`;
         }
       };
 
@@ -131,7 +135,8 @@ window.addEventListener("load", () => {
           return data.list;
         })
         .then(list => {
-          const temp = `${Math.floor(list[0].main.temp)}&deg;`;
+          // CURRENT WEATHER
+          const temp = `${Math.round(list[0].main.temp)}&deg;`;
 
           showData(currentDescription, list[0].weather[0].description);
           showData(currentDegree, temp);
@@ -139,9 +144,16 @@ window.addEventListener("load", () => {
           showData(currentWind, list[0].wind.speed);
           showData(currentHumidity, list[0].main.humidity);
           showData(currentPressure, list[0].main.pressure);
-          showIcon(list[0].weather[0].id, list[0].weather[0].icon);
 
-          console.log(list);
+          showIcon(currentIcon, list[0].weather[0].id, list[0].weather[0].icon);
+
+          // HOURLY FORECAST
+          hourIcons.forEach((icon, i) => showIcon(icon, list[i + 1].weather[0].id, list[i + 1].weather[0].icon));
+          hours.forEach((hour, i) => showData(hour, list[i + 1].dt_txt.slice(11, 16)));
+          hourDegrees.forEach((degree, i) => {
+            const temp = `${Math.round(list[i].main.temp)}&deg;`;
+            showData(degree, temp);
+          });
         })
         .catch(error => {
           return console.error(`Error: ${error}`);

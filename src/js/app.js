@@ -112,13 +112,10 @@ window.addEventListener("load", () => {
         }
       };
 
-      const showIcon = (element, id, icon) => {
-        if (id >= 800) {
-          if (icon.includes('d')) {
-            element.className = `wi wi-owm-day-${id}`;
-          } else if (icon.includes('n')) {
-            element.className = `wi wi-owm-night-${id}`;
-          }
+      const showIcon = (element, id, hour) => {
+        if (parseInt(hour) >= 21 || parseInt(hour) < 6) {
+          console.log('hlelo')
+          element.className = `wi wi-owm-night-${id}`;
         } else {
           element.className = `wi wi-owm-${id}`;
         }
@@ -145,15 +142,17 @@ window.addEventListener("load", () => {
           showData(currentHumidity, list[0].main.humidity);
           showData(currentPressure, list[0].main.pressure);
 
-          showIcon(currentIcon, list[0].weather[0].id, list[0].weather[0].icon);
+          showIcon(currentIcon, list[0].weather[0].id, list[0].dt_txt.slice(11, 13));
 
           // HOURLY FORECAST
-          hourIcons.forEach((icon, i) => showIcon(icon, list[i + 1].weather[0].id, list[i + 1].weather[0].icon));
+          hourIcons.forEach((icon, i) => showIcon(icon, list[i + 1].weather[0].id, list[i + 1].dt_txt.slice(11, 13)));
           hours.forEach((hour, i) => showData(hour, list[i + 1].dt_txt.slice(11, 16)));
           hourDegrees.forEach((degree, i) => {
             const temp = `${Math.round(list[i].main.temp)}&deg;`;
             showData(degree, temp);
           });
+
+          console.log(list)
         })
         .catch(error => {
           return console.error(`Error: ${error}`);

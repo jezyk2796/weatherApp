@@ -1,0 +1,29 @@
+.daily-forecast {
+    padding: 3rem 9rem;
+
+    .day-weather {
+        // display: flex;
+        padding: 2rem 0;
+        font-size: 2.5rem;
+
+        .forecast-day {
+            width: 40%;
+        }
+
+        i {
+            width: 20%;
+            font-size: 4rem;
+            text-align: center;
+        }
+
+        .day-degree {
+            width: 20%;
+            text-align: right;
+        }
+
+        .night-degree {
+            width: 20%;
+            text-align: right;
+        }
+    }
+}

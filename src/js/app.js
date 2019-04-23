@@ -114,10 +114,9 @@ window.addEventListener("load", () => {
 
       const showIcon = (element, id, hour) => {
         if (parseInt(hour) >= 21 || parseInt(hour) < 6) {
-          console.log('hlelo')
           element.className = `wi wi-owm-night-${id}`;
         } else {
-          element.className = `wi wi-owm-${id}`;
+          element.className = `wi wi-owm-day-${id}`;
         }
       };
 
@@ -152,6 +151,22 @@ window.addEventListener("load", () => {
             showData(degree, temp);
           });
 
+          // DAILY FORECAST
+          // const dtArr = [];
+
+          // list.forEach((l, i) => {
+          //   const curr = parseInt(l.dt_txt.slice(11, 13));
+
+          //   if (curr == 12 || curr == 3) {
+          //     dtArr.push(curr);
+          //   }
+          // });
+
+          // if (dtArr[0] == 3) {
+          //   dtArr.splice(0, 1);
+          // }
+
+          // console.log(dtArr)
           console.log(list)
         })
         .catch(error => {

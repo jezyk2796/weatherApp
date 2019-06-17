@@ -120,7 +120,9 @@ window.addEventListener("load", () => {
         }
       };
 
-      fetch(api)
+      fetch(api, {
+          method: 'GET'
+        })
         .then(resp => {
           return resp.json();
         })
@@ -133,6 +135,8 @@ window.addEventListener("load", () => {
         .then(list => {
           // CURRENT WEATHER
           const temp = `${Math.round(list[0].main.temp)}&deg;`;
+
+          console.log(list);
 
           showData(currentDescription, list[0].weather[0].description);
           showData(currentDegree, temp);
@@ -152,21 +156,21 @@ window.addEventListener("load", () => {
           });
 
           // DAILY FORECAST
-          // const dtArr = [];
+          const dtArr = [];
 
-          // list.forEach((l, i) => {
-          //   const curr = parseInt(l.dt_txt.slice(11, 13));
+          list.forEach(el => {
+            const curr = parseInt(el.dt_txt.slice(11, 13));
 
-          //   if (curr == 12 || curr == 3) {
-          //     dtArr.push(curr);
-          //   }
-          // });
+            if (curr == 12 || curr == 3) {
+              dtArr.push(curr);
+            }
+          });
 
-          // if (dtArr[0] == 3) {
-          //   dtArr.splice(0, 1);
-          // }
+          if (dtArr[0] == 3) {
+            dtArr.splice(0, 1);
+          }
 
-          // console.log(dtArr)
+
           console.log(list)
         })
         .catch(error => {
